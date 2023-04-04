@@ -3,6 +3,8 @@ import { useState } from "react";
 export default function useIsOpen() {
     const [modal, setModal] = useState(false);
     const [isOpen, setisOpen] = useState(false);
+    const [estadistica, setEstadistica] = useState(false);
+    const [config, setConfig] = useState(false);
 
     const toggleOffcanvas = () => {
         setisOpen(!isOpen);
@@ -12,5 +14,22 @@ export default function useIsOpen() {
         setModal(!modal);
     };
 
-    return { isOpen, modal, toggleOffcanvas, toggleModal };
+    const toggleEstas = () => {
+        setEstadistica(!estadistica);
+    };
+
+    const toggleConfig = () => {
+        setConfig(!config);
+    };
+
+    return {
+        isOpen,
+        modal,
+        estadistica,
+        config,
+        toggleOffcanvas,
+        toggleModal,
+        toggleEstas,
+        toggleConfig,
+    };
 }

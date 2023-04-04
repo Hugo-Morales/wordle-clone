@@ -4,14 +4,24 @@ import { IoSettings } from "react-icons/io5";
 import OffCanvas from "../offcanvas/OffCanvas";
 import useIsOpen from "../../hooks/useIsOpen";
 import Modal from "../modal/Modal";
+import Stats from "../stats/Stats";
+import Config from "../config/Config";
 
 export default function Navbar() {
-    const { isOpen, modal, toggleOffcanvas, toggleModal } = useIsOpen();
+    const {
+        isOpen,
+        modal,
+        estadistica,
+        config,
+        toggleOffcanvas,
+        toggleModal,
+        toggleEstas,
+        toggleConfig,
+    } = useIsOpen();
 
-    console.log(modal);
     return (
-        <nav className="h-16 border-b-[1px] text-center">
-            <div className="h-full flex justify-between items-center p-0 mx-4 text-3xl">
+        <nav className="h-16 border-b-[1px] dark:border-[#3a3a3c] text-center dark:bg-darkMode">
+            <div className="h-[4rem] flex justify-between items-center p-0 mx-4 text-3xl">
                 <button
                     className="border-[1px] rounded-md"
                     onClick={toggleOffcanvas}
@@ -23,12 +33,18 @@ export default function Navbar() {
                     <button onClick={toggleModal}>
                         <FaQuestionCircle />
                     </button>
-                    <AiFillSignal />
-                    <IoSettings />
+                    <button onClick={toggleEstas}>
+                        <AiFillSignal />
+                    </button>
+                    <button onClick={toggleConfig}>
+                        <IoSettings />
+                    </button>
                 </div>
             </div>
             <OffCanvas isOpen={isOpen} toggle={toggleOffcanvas} />
             <Modal isOpen={modal} toggle={toggleModal} />
+            <Stats isOpen={estadistica} toggle={toggleEstas} />
+            <Config isOpen={config} toggle={toggleConfig} />
         </nav>
     );
 }

@@ -17,7 +17,7 @@ export default function OffCanvas({ isOpen, toggle }) {
                     isOpen ? "translate-x-0" : "-translate-x-full"
                 }`}
             >
-                <div className="relative flex flex-col h-full bg-white shadow-xl">
+                <div className="relative flex flex-col h-full bg-white shadow-xl dark:bg-darkMode">
                     {/* Botón para cerrar el offcanvas */}
                     <div className="flex justify-between items-center mt-6 mx-6">
                         <h1 className="font-bold text-[20px]">Games</h1>

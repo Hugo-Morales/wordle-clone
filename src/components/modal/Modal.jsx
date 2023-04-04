@@ -32,13 +32,13 @@ export default function Modal({ isOpen, toggle }) {
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
                     >
-                        <div className="px-6 py-4 bg-white rounded-[15px] w-[450px]">
+                        <div className="px-6 py-4 bg-white dark:bg-black rounded-[15px] w-[450px]">
                             <div className="flex justify-between items-center gap-4">
-                                <h2 className="text-lg font-medium text-gray-900">
+                                <h2 className="text-lg font-medium text-gray-900 dark:text-white">
                                     ¿Cómo jugar?
                                 </h2>
                                 <button
-                                    className="text-gray-700 hover:text-gray-600 transition ease-in-out duration-150"
+                                    className="text-gray-700 hover:text-gray-600 dark:text-white transition ease-in-out duration-150"
                                     onClick={toggle}
                                 >
                                     <span className="sr-only">Close modal</span>

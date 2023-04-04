@@ -7,3 +7,8 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.dark {
+    background-color: #121213;
+    color: #fff;
+}

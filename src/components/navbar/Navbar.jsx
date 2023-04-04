@@ -1,18 +1,14 @@
-import { useState } from "react";
 import { FaBars, FaQuestionCircle } from "react-icons/fa";
 import { AiFillSignal } from "react-icons/ai";
 import { IoSettings } from "react-icons/io5";
+import OffCanvas from "../offcanvas/OffCanvas";
+import useIsOpen from "../../hooks/useIsOpen";
 import Modal from "../modal/Modal";
 
 export default function Navbar() {
-    const [isOpen, setisOpen] = useState(false);
+    const { isOpen, modal, toggleOffcanvas, toggleModal } = useIsOpen();
 
-    const toggleOffcanvas = () => {
-        setisOpen(!isOpen);
-    };
-
-    // console.log(isOpen);
-
+    console.log(modal);
     return (
         <nav className="h-16 border-b-[1px] text-center">
             <div className="h-full flex justify-between items-center p-0 mx-4 text-3xl">
@@ -24,12 +20,15 @@ export default function Navbar() {
                 </button>
                 <h1 className="font-bold pl-24">Wordle</h1>
                 <div className="flex justify-between items-center gap-4 text-[30px]">
-                    <FaQuestionCircle />
+                    <button onClick={toggleModal}>
+                        <FaQuestionCircle />
+                    </button>
                     <AiFillSignal />
                     <IoSettings />
                 </div>
             </div>
-            <Modal isOpen={isOpen} toggle={toggleOffcanvas} />
+            <OffCanvas isOpen={isOpen} toggle={toggleOffcanvas} />
+            <Modal isOpen={modal} toggle={toggleModal} />
         </nav>
     );
 }

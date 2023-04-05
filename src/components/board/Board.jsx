@@ -65,7 +65,7 @@ export default function Board() {
                 {row.map((c, index) => (
                     <div
                         key={index}
-                        className="inline-flex justify-center items-center border-2 dark:border-[#3a3a3e] border-[#d3d6da] box-border dark: text-white text-darkMode text-[2rem] font-bold uppercase select-none align-middle w-full line6"
+                        className="inline-flex justify-center items-center border-2 dark:border-[#3a3a3e] border-[#d3d6da] box-border dark:text-white text-darkMode text-[2rem] font-bold uppercase select-none align-middle w-full line6"
                     >
                         {c}
                     </div>

@@ -2,6 +2,7 @@ import Board from "./components/board/Board";
 import Functions from "./components/keyboards/Functions";
 import Keyboards from "./components/keyboards/Keyboards";
 import Navbar from "./components/navbar/Navbar";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
     const { handleKeyDown } = Functions();
@@ -19,6 +20,7 @@ export default function App() {
                 </div>
                 <Keyboards />
             </div>
+            <Toaster />
         </div>
     );
 }

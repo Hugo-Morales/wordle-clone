@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import Board from "./components/board/Board";
 import Functions from "./components/keyboards/Functions";
 import Keyboards from "./components/keyboards/Keyboards";
@@ -5,7 +6,14 @@ import Navbar from "./components/navbar/Navbar";
 import { Toaster } from "react-hot-toast";
 
 export default function App() {
-    const { handleKeyDown } = Functions();
+    const dataFetchedRef = useRef(false);
+    const { handleKeyDown, newGame } = Functions();
+
+    useEffect(() => {
+        if (dataFetchedRef.current) return;
+        dataFetchedRef.current = true;
+        newGame();
+    }, []);
 
     return (
         <div

@@ -7,13 +7,49 @@ let Box = 0; // Letras
 let Row = 1; // Fila
 
 export default function Functions() {
-    const guessword = encriptarPalabra(
-        words[Math.floor(Math.random() * words.length)].toUpperCase()
-    );
-    const desguessword = desencriptarPalabra(guessword);
+    let guessword = "LETRA"; // Temp
+    let game = {
+        list: ["", "", "", "", "", ""],
+    };
+    let stats = {
+        Total: 0,
+        Ganados: 0,
+        Perdidos: 0,
+        Racha: 0,
+        MaxRacha: 0,
+        Intentos: {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+        },
+    };
+
+    // Guardar Dia y guessword del día
+    const newGame = () => {
+        const date = localStorage.getItem("date");
+        let today = new Date().toLocaleDateString();
+
+        if (date === today) {
+            // Obtengo la palabra para evitar eligir uno nuevo
+            guessword = localStorage.getItem("guessword");
+            stats = JSON.parse(localStorage.getItem("stats"));
+            game = JSON.parse(localStorage.getItem("gameWords"));
+        } else {
+            // Guardo el día
+            localStorage.setItem("date", today);
+            localStorage.setItem("stats", JSON.stringify(stats));
+            const random = Math.floor(Math.random() * words.length);
+            guessword = encriptarPalabra(words[random].toUpperCase());
+            localStorage.setItem("guessword", guessword);
+        }
+
+        setTimeinModal();
+    };
 
     const handleKeyDown = (key) => {
-        console.log(desencriptarPalabra(guessword));
         key = "" + key.toUpperCase();
         // Verificamos que todos las filas esten vacías
         if (Row < 7) {
@@ -78,6 +114,8 @@ export default function Functions() {
     // Cuando Presiono Enter
     const submitclicked = () => {
         let word = getTypedWord();
+        let desguessword = desencriptarPalabra(guessword);
+        console.log(desguessword);
         const Class = Array.from(document.getElementsByClassName("line" + Row));
 
         // Palabra incompleta
@@ -96,10 +134,20 @@ export default function Functions() {
                 duration: 2500,
                 position: "top-center",
             });
+            return;
         }
 
         // Ganaste
         if (word === desguessword) {
+            stats.Ganados = stats.Ganados + 1;
+            stats.Racha = stats.Racha + 1;
+            stats.Total = stats.Total + 1;
+            stats.Intentos[Row] = stats.Intentos[Row] + 1;
+
+            if (stats.Racha > stats.MaxRacha) stats.MaxRacha = stats.Racha;
+
+            localStorage.setItem("stats", JSON.stringify(stats));
+
             toast.success("🦄 ¡¡Felicitaciones, acertaste!!", {
                 position: "top-center",
                 autoClose: 1500,
@@ -108,11 +156,12 @@ export default function Functions() {
 
         let tempGuess = desguessword;
         let temptype = word;
+        game.list[Row - 1] = temptype;
+        localStorage.setItem("gameWords", JSON.stringify(game));
+        console.log(game.list);
 
         for (let i = 0; i < 5; i++) {
-            // console.log(word.charAt(i) === desguessword.charAt(i));
             if (word.charAt(i) === desguessword.charAt(i)) {
-                console.log(Class[i]);
                 Class[i].setAttribute(
                     "style",
                     "background-color: #6aaa64 !important"
@@ -161,6 +210,10 @@ export default function Functions() {
 
         // Perdiste la ronda
         if (Row == 7) {
+            // stats.Perdidos = stats.Perdidos + 1;
+            // stats.Total = stats.Total + 1;
+            // stats.Racha = 0;
+            // localStorage.setItem("stats", JSON.stringify(stats));
             toast.error("Perdiste.", {
                 duration: 2500,
                 position: "top-center",
@@ -186,5 +239,41 @@ export default function Functions() {
         return typeWord;
     };
 
-    return { handleKeyDown, buttonclicked, delclicked, submitclicked };
+    function setTimeinModal() {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0);
+        var countDownDate = tomorrow.getTime();
+
+        var x = setInterval(function () {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+
+            var hours = Math.floor(
+                (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            );
+            var minutes = Math.floor(
+                (distance % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const span = document.getElementById("nextGame");
+
+            if (span) span.innerHTML = hours + ":" + minutes + ":" + seconds;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("nextGame").innerHTML = "00:00:00";
+            }
+        }, 1000);
+    }
+
+    return {
+        handleKeyDown,
+        buttonclicked,
+        delclicked,
+        submitclicked,
+        newGame,
+        setTimeinModal,
+    };
 }

@@ -21,7 +21,7 @@ export default function Stats({ isOpen, toggle }) {
 
     return (
         <Transition
-            show={game.status.includes("Win") ? !isOpen : isOpen}
+            show={game?.status.includes("Win") ? !isOpen : isOpen}
             as={React.Fragment}
         >
             <div className="fixed z-10 inset-0 overflow-y-auto">

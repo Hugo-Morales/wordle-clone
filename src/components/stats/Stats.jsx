@@ -3,8 +3,8 @@ import { MdClose } from "react-icons/md";
 import { Transition } from "@headlessui/react";
 
 export default function Stats({ isOpen, toggle }) {
+    let game = JSON.parse(localStorage.getItem("gameWords"));
     const stats = JSON.parse(localStorage.getItem("stats"));
-    console.log(stats);
     const values =
         stats !== null ? Object.values(stats.Intentos) : [0, 0, 0, 0, 0]; // Convierto los valores del obj en un array
     let max = 0;
@@ -20,7 +20,10 @@ export default function Stats({ isOpen, toggle }) {
     }
 
     return (
-        <Transition show={isOpen} as={React.Fragment}>
+        <Transition
+            show={game.status.includes("Win") ? !isOpen : isOpen}
+            as={React.Fragment}
+        >
             <div className="fixed z-10 inset-0 overflow-y-auto">
                 <div className="flex items-center justify-center min-h-screen">
                     <Transition.Child
@@ -44,7 +47,7 @@ export default function Stats({ isOpen, toggle }) {
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
                     >
-                        <div className="px-6 py-4 bg-white dark:bg-darkMode rounded-[15px] w-[450px]">
+                        <div className="px-6 py-4 bg-white dark:bg-darkMode rounded-[15px] w-[450px] z-[11]">
                             <div className="flex justify-between items-center gap-4">
                                 <h2 className="text-lg font-medium text-gray-900 dark:text-white">
                                     Estadísticas

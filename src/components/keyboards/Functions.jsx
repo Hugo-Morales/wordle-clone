@@ -7,9 +7,11 @@ let Box = 0; // Letras
 let Row = 1; // Fila
 
 export default function Functions() {
-    let guessword = "LETRA"; // Temp
+    let guessword = ""; // Temp
+    let palabras = "";
     let game = {
         list: ["", "", "", "", "", ""],
+        status: "",
     };
     let stats = {
         Total: 0,
@@ -35,8 +37,44 @@ export default function Functions() {
         if (date === today) {
             // Obtengo la palabra para evitar eligir uno nuevo
             guessword = localStorage.getItem("guessword");
+            let desguessword1 = desencriptarPalabra(guessword);
             stats = JSON.parse(localStorage.getItem("stats"));
             game = JSON.parse(localStorage.getItem("gameWords"));
+            palabras = game.list.filter((w) => w !== "");
+
+            for (let i = 0; i < palabras.length; i++) {
+                Row = i + 1;
+                let Class = Array.from(
+                    document.getElementsByClassName("line" + Row)
+                );
+
+                for (let j = 0; j < 5; j++) {
+                    Class[j].innerHTML = palabras[i].charAt(j);
+
+                    if (palabras[i].charAt(j) !== desguessword1.charAt(j)) {
+                        Class[j].setAttribute(
+                            "style",
+                            "background-color: #787c7e !important"
+                        );
+                    }
+
+                    if (desguessword1.includes(palabras[i].charAt(j))) {
+                        Class[j].setAttribute(
+                            "style",
+                            "background-color: #ecc40f !important"
+                        );
+                    }
+
+                    if (palabras[i].charAt(j) === desguessword1.charAt(j)) {
+                        Class[j].setAttribute(
+                            "style",
+                            "background-color: #6aaa64 !important"
+                        );
+                    }
+                }
+            }
+
+            if (game.status !== "Win") Row = Row + 1;
         } else {
             // Guardo el día
             localStorage.setItem("date", today);
@@ -44,6 +82,8 @@ export default function Functions() {
             const random = Math.floor(Math.random() * words.length);
             guessword = encriptarPalabra(words[random].toUpperCase());
             localStorage.setItem("guessword", guessword);
+            localStorage.removeItem("gameWords");
+            localStorage.setItem("gameWords", JSON.stringify(game));
         }
 
         setTimeinModal();
@@ -52,7 +92,7 @@ export default function Functions() {
     const handleKeyDown = (key) => {
         key = "" + key.toUpperCase();
         // Verificamos que todos las filas esten vacías
-        if (Row < 7) {
+        if (Row < 7 && game.status !== "Win") {
             // Key Enter
             if (key.match("ENTER")) {
                 submitclicked();
@@ -66,7 +106,7 @@ export default function Functions() {
             }
 
             // Key Letras
-            if (key.match(/^[A-Z]$/) !== null) {
+            if (key.match(/^[A-Z]$/)) {
                 buttonPressKey(key);
                 return;
             }
@@ -114,6 +154,7 @@ export default function Functions() {
     // Cuando Presiono Enter
     const submitclicked = () => {
         let word = getTypedWord();
+        guessword = localStorage.getItem("guessword");
         let desguessword = desencriptarPalabra(guessword);
         console.log(desguessword);
         const Class = Array.from(document.getElementsByClassName("line" + Row));
@@ -143,10 +184,12 @@ export default function Functions() {
             stats.Racha = stats.Racha + 1;
             stats.Total = stats.Total + 1;
             stats.Intentos[Row] = stats.Intentos[Row] + 1;
+            game.status = "Win";
 
             if (stats.Racha > stats.MaxRacha) stats.MaxRacha = stats.Racha;
 
             localStorage.setItem("stats", JSON.stringify(stats));
+            localStorage.setItem("gameWords", JSON.stringify(game));
 
             toast.success("🦄 ¡¡Felicitaciones, acertaste!!", {
                 position: "top-center",
@@ -158,7 +201,6 @@ export default function Functions() {
         let temptype = word;
         game.list[Row - 1] = temptype;
         localStorage.setItem("gameWords", JSON.stringify(game));
-        console.log(game.list);
 
         for (let i = 0; i < 5; i++) {
             if (word.charAt(i) === desguessword.charAt(i)) {
@@ -173,9 +215,7 @@ export default function Functions() {
                 temptype[i] = " ";
                 temptype = temptype.join("");
             }
-        }
 
-        for (let i = 0; i < 5; i++) {
             if (temptype.charAt(i) !== " ") {
                 if (tempGuess.indexOf(word.charAt(i)) > -1) {
                     let indx = tempGuess.indexOf(word.charAt(i));
@@ -195,14 +235,13 @@ export default function Functions() {
                     temptype = temptype.join("");
                 }
             }
-        }
 
-        for (let i = 0; i < 5; i++) {
-            if (temptype.charAt(i) === "-")
+            if (temptype.charAt(i) === "-") {
                 Class[i].setAttribute(
                     "style",
                     "background-color: #787c7e !important"
                 );
+            }
         }
 
         Box = 0;
@@ -210,10 +249,10 @@ export default function Functions() {
 
         // Perdiste la ronda
         if (Row == 7) {
-            // stats.Perdidos = stats.Perdidos + 1;
-            // stats.Total = stats.Total + 1;
-            // stats.Racha = 0;
-            // localStorage.setItem("stats", JSON.stringify(stats));
+            stats.Perdidos = stats.Perdidos + 1;
+            stats.Total = stats.Total + 1;
+            stats.Racha = 0;
+            localStorage.setItem("stats", JSON.stringify(stats));
             toast.error("Perdiste.", {
                 duration: 2500,
                 position: "top-center",

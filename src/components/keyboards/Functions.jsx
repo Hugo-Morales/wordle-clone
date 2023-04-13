@@ -74,7 +74,7 @@ export default function Functions() {
                 }
             }
 
-            if (game.status !== "Win") Row = Row + 1;
+            if (game.status !== "Win") Row = Row + palabras === 0 ? 0 : 1;
         } else {
             // Guardo el día
             localStorage.setItem("date", today);

@@ -2,6 +2,7 @@
 
 ![Badge en Desarollo](https://img.shields.io/badge/STATUS-TERMINADO-red)
 ![GitHub Org's stars](https://img.shields.io/github/stars/camilafernanda?style=social)
+[URL](https://wordle-clone-six-theta.vercel.app/)
 
 ## Imágenes del Proyecto
 ![00](https://user-images.githubusercontent.com/58606889/231864516-ed6ea07b-233e-41aa-8cab-4abf47047095.png)
@@ -10,9 +11,6 @@
 ![03](https://user-images.githubusercontent.com/58606889/231864560-ef824f37-70d1-4514-a779-0953572e0b34.png)
 ![04](https://user-images.githubusercontent.com/58606889/231867185-06823aaa-0a42-4d7f-9cd9-22cd67ae4f46.png)
 ![05](https://user-images.githubusercontent.com/58606889/231867199-fda6d379-9d04-403d-9c67-89234467ba94.png)
-
-## Link
-[URL](https://wordle-clone-six-theta.vercel.app/)
 
 ## :heavy_check_mark: Tecnologías usadas
 

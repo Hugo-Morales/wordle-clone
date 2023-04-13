@@ -8,7 +8,11 @@
 ![01](https://user-images.githubusercontent.com/58606889/231864537-66964433-ceff-4109-bdfe-b3131d73e963.png)
 ![02](https://user-images.githubusercontent.com/58606889/231864547-166c47dd-ba6b-473c-a8e1-a2ab4104b6e4.png)
 ![03](https://user-images.githubusercontent.com/58606889/231864560-ef824f37-70d1-4514-a779-0953572e0b34.png)
+![04](https://user-images.githubusercontent.com/58606889/231867185-06823aaa-0a42-4d7f-9cd9-22cd67ae4f46.png)
+![05](https://user-images.githubusercontent.com/58606889/231867199-fda6d379-9d04-403d-9c67-89234467ba94.png)
 
+## Link
+[URL](https://wordle-clone-six-theta.vercel.app/)
 
 ## :heavy_check_mark: Tecnologías usadas
 

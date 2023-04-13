@@ -20,7 +20,7 @@
         <li> Tailwind</li>
         <li> Cryto Js</li>
         <li> headlessui</li>
-    <ul>
+    </ul>
 </ul>
 
 ## Instalación 🔧

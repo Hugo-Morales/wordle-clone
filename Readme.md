@@ -22,3 +22,22 @@
         <li> headlessui</li>
     <ul>
 </ul>
+
+## Instalación 🔧
+_Instalar el proyecto, en la linea de comandos (CMD) copiar y pegar_
+
+```
+git clone https://github.com/Hugo-Morales/wordle-clone.git
+```
+
+_Instalar dependencias_
+
+```
+npm install o npm i
+```
+
+_Iniciar el proyecto_
+
+```
+npm run dev
+```
